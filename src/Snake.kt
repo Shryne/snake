@@ -3,13 +3,24 @@ import java.awt.Graphics2D
 
 class Snake(startX: Int, startY: Int): GridElement {
     private val direction = Direction()
-    private val x = MutableInt(startX)
-    private val y = MutableInt(startY)
 
+    private val posList = mutableListOf(
+        MutGridPos(startX, startY),
+        MutGridPos(startX, startY),
+        MutGridPos(startX, startY)
+    )
     private val cells = mutableListOf(
         Cell(
-            GridPos(x, y),
+            posList.first(),
             Color.BLACK
+        ),
+        Cell(
+            posList[1],
+            Color.GRAY
+        ),
+        Cell(
+            posList[2],
+            Color.GRAY
         )
     )
 
@@ -17,8 +28,12 @@ class Snake(startX: Int, startY: Int): GridElement {
     override fun event(event: Event) = direction.apply(event)
 
     override fun tic() {
-        x.value += direction.x
-        y.value += direction.y
+        for (i in (1 until posList.size).reversed()) {
+            posList[i].x = posList[i - 1].x
+            posList[i].y = posList[i - 1].y
+        }
+        posList.first().x += direction.x
+        posList.first().y += direction.y
     }
 }
 

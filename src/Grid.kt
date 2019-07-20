@@ -35,8 +35,8 @@ class Grid(
             val prev = g.color
             g.color = color
             g.fillRect(
-                area.x.toInt() + gridPos.x() * cellSize.w.toInt(),
-                area.y.toInt() + gridPos.y() * cellSize.h.toInt(),
+                area.x.toInt() + gridPos.x * cellSize.w.toInt(),
+                area.y.toInt() + gridPos.y * cellSize.h.toInt(),
                 cellSize.w.toInt(),
                 cellSize.h.toInt()
             )
@@ -50,6 +50,12 @@ class Grid(
 
 data class GridSize(val cols: Int, val rows: Int)
 
-class GridPos(val x: () -> Int, val y: () -> Int) {
+open class GridPos(private val xNum: () -> Int, private val yNum: () -> Int) {
     constructor(x: Int, y: Int): this({ x }, { y })
+
+    open val x get() = xNum()
+    open val y get() = yNum()
 }
+
+class MutGridPos(override var x: Int, override var y: Int)
+    : GridPos({ x }, { y })
