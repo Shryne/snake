@@ -1,35 +1,13 @@
+import java.awt.Color
 import java.awt.Graphics2D
 
-class Snake(
-    private val direction: Direction,
-    pos: Pos, grid: Grid,
-    private val partSize: Size
-): Element {
-
-    private val x = MutableScalar(0)
-    private val y = MutableScalar(0)
+class Snake(pos: GridPos): GridElement {
 
     private val cells = mutableListOf(
-        SnakeCell(
-            Pos(
-                pos.x + x,
-                pos.y + y
-            ),
-            partSize
-        )
+        Cell(pos, Color.BLACK)
     )
 
-    private var startTime = System.currentTimeMillis()
-
-
-    override fun draw(g: Graphics2D) {
-        if (System.currentTimeMillis() - startTime > 600) {
-            x.value += direction.x * partSize.w.toInt()
-            y.value += direction.y * partSize.h.toInt()
-            startTime = System.currentTimeMillis()
-        }
-        cells.forEach{ it.draw(g) }
-    }
+    override fun drawOn(target: Target) = cells.forEach{ it.drawOn(target) }
 }
 
 class MutableScalar(var value: Int) : Number() {

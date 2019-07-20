@@ -11,27 +11,7 @@ class Grid(
         { area.w / gridSize.cols }, { area.h / gridSize.rows }
     )
 
-    private val snake = Snake(
-        direction,
-        Pos(area.x + cellSize.w * 10, area.y + cellSize.h * 10),
-        this,
-        cellSize
-    )
-
-    /*
-    private val array = Array(gridSize.rows) {
-        row -> Array(gridSize.cols) {
-            col -> Size({ area.w / gridSize.cols }, { area.h / gridSize.rows }).run {
-                Cell(
-                    Pos(
-                        { area.x + row * this.w },
-                        { area.y + col * this.h }
-                    ),
-                    this
-                )
-            }
-        }
-    }*/
+    private val snake = Snake(GridPos(10, 10))
 
     override fun draw(g: Graphics2D) {
         if (isVisible) {
@@ -52,13 +32,22 @@ class Grid(
                 )
             }
         }
-        snake.draw(g)
+        snake.drawOn { gridPos, color ->
+            val prev = g.color
+            g.color = color
+            g.fillRect(
+                area.x.toInt() + gridPos.x() * cellSize.w.toInt(),
+                area.y.toInt() + gridPos.y() * cellSize.h.toInt(),
+                cellSize.w.toInt(),
+                cellSize.h.toInt()
+            )
+            g.color = prev
+        }
     }
 }
 
 data class GridSize(val cols: Int, val rows: Int)
 
-class GridPos(private val xNum: () -> Int, private val yNum: () -> Int) {
-    val x get() = xNum()
-    val y get() = yNum()
+class GridPos(val x: () -> Int, val y: () -> Int) {
+    constructor(x: Int, y: Int): this({ x }, { y })
 }
