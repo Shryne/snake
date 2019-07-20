@@ -12,28 +12,43 @@ class Window(private val winSize: Size) {
 
     private val frame = JFrame("Snake").apply {
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-        val content = GameScreen(
-            Size({ width }, { height })
-        )
+
         contentPane = object : JComponent() {
+            val content = GameScreen(
+                Size({ width }, { height })
+            )
+
+            init {
+                Timer(0, ActionListener { content.tic() }).apply {
+                    isRepeats = true
+                    delay = 500
+                }.start()
+            }
+
+            init {
+                addKeyListener(
+                    object : KeyAdapter() {
+                        override fun keyPressed(e: KeyEvent?) {
+                            when (e?.keyCode) {
+                                KeyEvent.VK_UP -> content.event(Event.UP)
+                                KeyEvent.VK_DOWN -> content.event(Event.DOWN)
+                                KeyEvent.VK_LEFT -> content.event(Event.LEFT)
+                                KeyEvent.VK_RIGHT -> content.event(Event.RIGHT)
+                            }
+                        }
+                    }
+                )
+
+            }
+
             override fun paintComponent(g: Graphics) {
                 super.paintComponent(g)
                 content.draw(g as Graphics2D)
             }
         }
-        contentPane.addKeyListener(
-            object : KeyAdapter() {
-                override fun keyPressed(e: KeyEvent?) {
-                    when (e?.keyCode) {
-                        KeyEvent.VK_UP -> content.event(Event.UP)
-                        KeyEvent.VK_DOWN -> content.event(Event.DOWN)
-                        KeyEvent.VK_LEFT -> content.event(Event.LEFT)
-                        KeyEvent.VK_RIGHT -> content.event(Event.RIGHT)
-                    }
-                }
-            }
+        contentPane.preferredSize = Dimension(
+            winSize.w.toInt(), winSize.h.toInt()
         )
-        contentPane.preferredSize = Dimension(winSize.w.toInt(), winSize.h.toInt())
         pack()
         setLocationRelativeTo(null)
         System.setProperty("awt.useSystemAAFontSettings","on")
@@ -45,10 +60,7 @@ class Window(private val winSize: Size) {
             isRepeats = true
             delay = 17
         }.start()
-        Timer(0, ActionListener { content.tic() }).apply {
-            isRepeats = true
-            delay = 500
-        }.start()
+
     }
 
     fun show() {

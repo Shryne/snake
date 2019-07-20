@@ -18,19 +18,19 @@ class Grid(
 
     override fun draw(g: Graphics2D) {
         if (isVisible) {
-            for (row in 0..gridSize.rows) {
+            for (row in 0 until gridSize.rows) {
                 g.drawLine(
                     area.x.toInt(),
-                    area.y.toInt() + row * cellSize.h.toInt(),
+                    (area.y + row * cellSize.h.toDouble()).toInt(),
                     area.x.toInt() + area.w.toInt(),
-                    area.y.toInt() + row * cellSize.h.toInt()
+                    (area.y + row * cellSize.h.toDouble()).toInt()
                 )
             }
             for (col in 0..gridSize.cols) {
                 g.drawLine(
-                    area.x.toInt() + col * cellSize.w.toInt(),
+                    (area.x + col * cellSize.w.toDouble()).toInt(),
                     area.y.toInt(),
-                    area.x.toInt() + col * cellSize.w.toInt(),
+                    (area.x + col * cellSize.w.toDouble()).toInt(),
                     area.y.toInt() + area.h.toInt()
                 )
             }
@@ -39,10 +39,10 @@ class Grid(
             val prev = g.color
             g.color = color
             g.fillRect(
-                area.x.toInt() + gridPos.x * cellSize.w.toInt(),
-                area.y.toInt() + gridPos.y * cellSize.h.toInt(),
-                cellSize.w.toInt(),
-                cellSize.h.toInt()
+                (area.x + gridPos.x * cellSize.w.toDouble()).toInt(),
+                (area.y + gridPos.y * cellSize.h.toDouble()).toInt(),
+                cellSize.w.toInt() + 1,
+                cellSize.h.toInt() + 1
             )
             g.color = prev
         }
