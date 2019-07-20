@@ -11,6 +11,7 @@ class Snake(startX: Int, startY: Int, private val gridSize: GridSize)
         MutGridPos(startX, startY),
         MutGridPos(startX, startY)
     )
+
     private val cells = mutableListOf(
         Cell(
             posList.first(),
@@ -18,11 +19,11 @@ class Snake(startX: Int, startY: Int, private val gridSize: GridSize)
         ),
         Cell(
             posList[1],
-            Color.GRAY
+            Color.DARK_GRAY
         ),
         Cell(
             posList[2],
-            Color.GRAY
+            Color.DARK_GRAY
         )
     )
 
@@ -37,6 +38,33 @@ class Snake(startX: Int, startY: Int, private val gridSize: GridSize)
         val head = posList.first()
         head.x = (head.x + direction.x).inBounds(0, gridSize.cols - 1)
         head.y = (head.y + direction.y).inBounds(0, gridSize.rows - 1)
+    }
+
+    fun eats(gridPos: GridPos) =
+        posList.first().x == gridPos.x && posList.first().y == gridPos.y
+
+    fun grow() {
+        val last = posList.last()
+        posList.add(MutGridPos(last.x, last.y))
+        cells.add(
+            Cell(
+                posList.last(),
+                Color.DARK_GRAY
+            )
+        )
+    }
+
+    fun without(posList: List<List<GridPos>>) : List<List<GridPos>> {
+        val result = posList.map {
+            it.toMutableList()
+        }.toMutableList()
+        this.posList.forEach { snakeCell ->
+            result.forEach { row ->
+                row.removeIf { it.x == snakeCell.x && it.y == snakeCell.y }
+            }
+            result.removeIf { it.isEmpty() }
+        }
+        return result
     }
 }
 

@@ -1,3 +1,4 @@
+import java.awt.Color
 import java.awt.Graphics2D
 
 class Grid(
@@ -14,6 +15,16 @@ class Grid(
         10,
         10,
         gridSize
+    )
+
+    private val allPositions = List(gridSize.rows) {
+        x -> List(gridSize.cols) {
+            y -> GridPos(x, y)
+        }
+    }
+
+    private var food = Apple(
+        snake.without(allPositions).random().random()
     )
 
     override fun draw(g: Graphics2D) {
@@ -35,6 +46,17 @@ class Grid(
                 )
             }
         }
+        food.drawOn { gridPos, color ->
+            val prev = g.color
+            g.color = color
+            g.fillRect(
+                (area.x + gridPos.x * cellSize.w.toDouble()).toInt(),
+                (area.y + gridPos.y * cellSize.h.toDouble()).toInt(),
+                cellSize.w.toInt() + 1,
+                cellSize.h.toInt() + 1
+            )
+            g.color = prev
+        }
         snake.drawOn { gridPos, color ->
             val prev = g.color
             g.color = color
@@ -49,7 +71,15 @@ class Grid(
     }
 
     override fun event(e: Event) = snake.event(e)
-    override fun tic() = snake.tic()
+    override fun tic() {
+        snake.tic()
+        if (snake.eats(food.pos)) {
+            snake.grow()
+            food = Apple(
+                snake.without(allPositions).random().random()
+            )
+        }
+    }
 }
 
 data class GridSize(val cols: Int, val rows: Int)

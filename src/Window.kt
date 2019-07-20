@@ -21,7 +21,7 @@ class Window(private val winSize: Size) {
             init {
                 Timer(0, ActionListener { content.tic() }).apply {
                     isRepeats = true
-                    delay = 500
+                    delay = 400
                 }.start()
             }
 
