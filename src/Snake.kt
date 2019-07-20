@@ -1,7 +1,9 @@
 import java.awt.Color
 import java.awt.Graphics2D
 
-class Snake(startX: Int, startY: Int): GridElement {
+class Snake(startX: Int, startY: Int, private val gridSize: GridSize)
+    : GridElement {
+
     private val direction = Direction()
 
     private val posList = mutableListOf(
@@ -32,10 +34,18 @@ class Snake(startX: Int, startY: Int): GridElement {
             posList[i].x = posList[i - 1].x
             posList[i].y = posList[i - 1].y
         }
-        posList.first().x += direction.x
-        posList.first().y += direction.y
+        val head = posList.first()
+        head.x = (head.x + direction.x).inBounds(0, gridSize.cols - 1)
+        head.y = (head.y + direction.y).inBounds(0, gridSize.rows - 1)
     }
 }
+
+private fun Int.inBounds(min: Int, max: Int) =
+    when {
+        this < min -> max
+        max < this -> min
+        else -> this
+    }
 
 class MutableInt(var value: Int) : () -> Int {
     override fun invoke() = value

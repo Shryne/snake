@@ -10,7 +10,11 @@ class Grid(
         { area.w / gridSize.cols }, { area.h / gridSize.rows }
     )
 
-    private val snake = Snake(10, 10)
+    private val snake = Snake(
+        10,
+        10,
+        gridSize
+    )
 
     override fun draw(g: Graphics2D) {
         if (isVisible) {
