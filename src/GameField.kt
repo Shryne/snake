@@ -5,8 +5,8 @@ class GameField(
     private val gridVisible: Boolean = true
 ) : Element {
 
-    constructor(direction: Direction, area: Area, gridSize: GridSize = GridSize(20, 20)):
-            this(Grid(direction, area, gridSize))
+    constructor(area: Area, gridSize: GridSize = GridSize(20, 20)):
+            this(Grid(area, gridSize))
 
     override fun draw(g: Graphics2D) {
         if (gridVisible) {
@@ -14,4 +14,7 @@ class GameField(
         }
     }
 
+    override fun event(e: Event) = grid.event(e)
+
+    override fun tic() = grid.tic()
 }

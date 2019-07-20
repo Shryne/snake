@@ -4,4 +4,6 @@ typealias Target = (GridPos, Color) -> Unit
 
 interface GridElement {
     fun drawOn(target: Target)
+    fun event(event: Event)
+    fun tic()
 }

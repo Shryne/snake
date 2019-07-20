@@ -1,12 +1,9 @@
 import java.awt.Dimension
 import java.awt.Graphics
 import java.awt.Graphics2D
-import java.awt.event.KeyEvent
-import java.awt.event.KeyListener
+import java.awt.event.*
 import javax.swing.JComponent
 import javax.swing.JFrame
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
 import javax.swing.Timer
 
 
@@ -15,10 +12,8 @@ class Window(private val winSize: Size) {
 
     private val frame = JFrame("Snake").apply {
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-        val direction = Direction()
         val content = GameScreen(
-            Size({ width }, { height }),
-            direction
+            Size({ width }, { height })
         )
         contentPane = object : JComponent() {
             override fun paintComponent(g: Graphics) {
@@ -27,33 +22,14 @@ class Window(private val winSize: Size) {
             }
         }
         contentPane.addKeyListener(
-            object : KeyListener {
-                override fun keyTyped(e: KeyEvent?) {}
-
+            object : KeyAdapter() {
                 override fun keyPressed(e: KeyEvent?) {
                     when (e?.keyCode) {
-                        KeyEvent.VK_UP -> direction.apply {
-                            x = 0
-                            y = -1
-                            println("Hey")
-                        }
-                        KeyEvent.VK_DOWN -> direction.apply {
-                            x = 0
-                            y = 1
-                        }
-                        KeyEvent.VK_LEFT -> direction.apply {
-                            x = -1
-                            y = 0
-                        }
-                        KeyEvent.VK_RIGHT -> direction.apply {
-                            x = 1
-                            y = 0
-                        }
+                        KeyEvent.VK_UP -> content.event(Event.UP)
+                        KeyEvent.VK_DOWN -> content.event(Event.DOWN)
+                        KeyEvent.VK_LEFT -> content.event(Event.LEFT)
+                        KeyEvent.VK_RIGHT -> content.event(Event.RIGHT)
                     }
-                }
-
-                override fun keyReleased(e: KeyEvent?) {
-
                 }
             }
         )
@@ -68,6 +44,10 @@ class Window(private val winSize: Size) {
         Timer(0, ActionListener { repaint() }).apply {
             isRepeats = true
             delay = 17
+        }.start()
+        Timer(0, ActionListener { content.tic() }).apply {
+            isRepeats = true
+            delay = 500
         }.start()
     }
 

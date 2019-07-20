@@ -1,7 +1,6 @@
 import java.awt.Graphics2D
 
 class Grid(
-    direction: Direction,
     private val area: Area,
     private val gridSize: GridSize,
     private val isVisible: Boolean = true
@@ -11,7 +10,7 @@ class Grid(
         { area.w / gridSize.cols }, { area.h / gridSize.rows }
     )
 
-    private val snake = Snake(GridPos(10, 10))
+    private val snake = Snake(10, 10)
 
     override fun draw(g: Graphics2D) {
         if (isVisible) {
@@ -44,6 +43,9 @@ class Grid(
             g.color = prev
         }
     }
+
+    override fun event(e: Event) = snake.event(e)
+    override fun tic() = snake.tic()
 }
 
 data class GridSize(val cols: Int, val rows: Int)

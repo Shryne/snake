@@ -1,7 +1,12 @@
 import java.awt.Font
 import java.awt.Graphics2D
 
-class Labels(private val windowSize: Size, val pos: Pos = Pos(), private val size: Int = 20) : Element {
+class Labels(
+    private val windowSize: Size,
+    val pos: Pos = Pos(),
+    private val size: Int = 20
+) : Element {
+
     private var fontInitialized = false
     private var ascent: Int = 0
     private var descent: Int = 0
@@ -15,8 +20,9 @@ class Labels(private val windowSize: Size, val pos: Pos = Pos(), private val siz
             ascent = g.fontMetrics.getLineMetrics(text, g).ascent.toInt()
             descent = g.fontMetrics.getLineMetrics(text, g).descent.toInt()
         }
-
         g.drawString(text, pos.x.toInt(), pos.y.toInt() + ascent)
     }
 
+    override fun event(e: Event) = Unit
+    override fun tic() = Unit
 }

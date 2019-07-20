@@ -1,11 +1,12 @@
 import java.awt.Graphics2D
 
-class GameScreen(private val labels: Element, private val field: GameField) : Element {
-    private constructor(size: Size, labels: Labels, direction: Direction):
+class GameScreen(private val labels: Element, private val field: GameField)
+    : Element {
+
+    private constructor(size: Size, labels: Labels):
             this(
                 labels,
                 GameField(
-                    direction,
                     Area(
                         { 0 },
                         { labels.height },
@@ -15,10 +16,20 @@ class GameScreen(private val labels: Element, private val field: GameField) : El
                 )
             )
 
-    constructor(size: Size, direction: Direction): this(size, Labels(size), direction)
+    constructor(size: Size): this(size, Labels(size))
 
     override fun draw(g: Graphics2D) {
         labels.draw(g)
         field.draw(g)
+    }
+
+    override fun event(e: Event) {
+        labels.event(e)
+        field.event(e)
+    }
+
+    override fun tic() {
+        labels.tic()
+        field.tic()
     }
 }
