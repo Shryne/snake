@@ -30,10 +30,14 @@ class Window(private val winSize: Size) {
                     object : KeyAdapter() {
                         override fun keyPressed(e: KeyEvent?) {
                             when (e?.keyCode) {
-                                KeyEvent.VK_UP -> content.event(Event.UP)
-                                KeyEvent.VK_DOWN -> content.event(Event.DOWN)
-                                KeyEvent.VK_LEFT -> content.event(Event.LEFT)
-                                KeyEvent.VK_RIGHT -> content.event(Event.RIGHT)
+                                KeyEvent.VK_UP, KeyEvent.VK_W
+                                -> content.event(Event.UP)
+                                KeyEvent.VK_DOWN, KeyEvent.VK_S
+                                -> content.event(Event.DOWN)
+                                KeyEvent.VK_LEFT, KeyEvent.VK_A
+                                -> content.event(Event.LEFT)
+                                KeyEvent.VK_RIGHT, KeyEvent.VK_D
+                                -> content.event(Event.RIGHT)
                             }
                         }
                     }
