@@ -5,6 +5,7 @@ class Snake(startX: Int, startY: Int, private val gridSize: GridSize)
     : GridElement {
 
     private val direction = Direction()
+    private var ticked = false
 
     private val posList = mutableListOf(
         MutGridPos(startX, startY),
@@ -28,9 +29,18 @@ class Snake(startX: Int, startY: Int, private val gridSize: GridSize)
     )
 
     override fun drawOn(target: Target) = cells.forEach{ it.drawOn(target) }
-    override fun event(event: Event) = direction.apply(event)
+    override fun event(event: Event) {
+        if (!ticked) {
+            direction.apply(event)
+            ticked = true
+        }
+    }
 
     override fun tic() {
+        if (posList.first().x + direction.x == posList[1].x &&
+            posList.first().y + direction.y == posList[1].y) {
+            posList.reverse()
+        }
         for (i in (1 until posList.size).reversed()) {
             posList[i].x = posList[i - 1].x
             posList[i].y = posList[i - 1].y
@@ -38,6 +48,7 @@ class Snake(startX: Int, startY: Int, private val gridSize: GridSize)
         val head = posList.first()
         head.x = (head.x + direction.x).inBounds(0, gridSize.cols - 1)
         head.y = (head.y + direction.y).inBounds(0, gridSize.rows - 1)
+        ticked = false
     }
 
     fun eats(gridPos: GridPos) =
@@ -74,7 +85,3 @@ private fun Int.inBounds(min: Int, max: Int) =
         max < this -> min
         else -> this
     }
-
-class MutableInt(var value: Int) : () -> Int {
-    override fun invoke() = value
-}
