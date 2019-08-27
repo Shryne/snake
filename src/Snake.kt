@@ -4,29 +4,28 @@ import java.awt.Graphics2D
 class Snake(startX: Int, startY: Int, private val gridSize: GridSize)
     : GridElement {
 
+    companion object {
+        const val START_LENGTH = 3
+    }
+
     private val direction = Direction()
     private var ticked = false
 
-    private val posList = mutableListOf(
-        MutGridPos(startX, startY),
-        MutGridPos(startX, startY),
+    private val posList = MutableList(START_LENGTH) {
         MutGridPos(startX, startY)
-    )
+    }
 
-    private val cells = mutableListOf(
+    private val cells = MutableList(START_LENGTH) {
         Cell(
-            posList.first(),
-            Cell.HEAD_COLOR
-        ),
-        Cell(
-            posList[1],
-            Cell.BODY_COLOR
-        ),
-        Cell(
-            posList[2],
-            Cell.BODY_COLOR
+            posList[it],
+            when (it) {
+                0 -> Cell.HEAD_COLOR
+                else -> Cell.BODY_COLOR
+            }
         )
-    )
+    }
+
+    val length get() = cells.size
 
     override fun drawOn(target: Target) = cells.forEach{ it.drawOn(target) }
     override fun event(event: Event) {

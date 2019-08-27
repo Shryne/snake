@@ -18,6 +18,8 @@ class GameScreen(private val labels: Element, private val grid: Grid)
 
     constructor(size: Size): this(size, Labels(size))
 
+    val snakeLength get() = grid.snakeLength
+
     override fun draw(g: Graphics2D) {
         labels.draw(g)
         grid.draw(g)

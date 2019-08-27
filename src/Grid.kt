@@ -26,6 +26,8 @@ class Grid(
         snake.without(allPositions).random().random()
     )
 
+    val snakeLength get() = snake.length
+
     override fun draw(g: Graphics2D) {
         if (isVisible) {
             for (row in 0 until gridSize.rows) {

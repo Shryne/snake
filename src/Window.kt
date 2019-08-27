@@ -5,9 +5,15 @@ import java.awt.event.*
 import javax.swing.JComponent
 import javax.swing.JFrame
 import javax.swing.Timer
+import kotlin.math.max
 
 class Window(private val winSize: Size) {
     constructor(w: Int, h: Int): this(Size(w, h))
+
+    companion object {
+        private const val MIN_DELAY = 80
+        private const val MAX_DELAY = 400
+    }
 
     private val frame = lazy {
         JFrame("Snake").apply {
@@ -19,13 +25,18 @@ class Window(private val winSize: Size) {
                 )
 
                 init {
-                    Timer(0, ActionListener { content.tic() }).apply {
+                    val timer = Timer(0, ActionListener { content.tic() }).apply {
                         isRepeats = true
-                        delay = 400
-                    }.start()
-                }
-
-                init {
+                    }
+                    timer.addActionListener {
+                        timer.delay = max(
+                            MIN_DELAY,
+                            MAX_DELAY - (
+                                content.snakeLength - Snake.START_LENGTH
+                                ) * 10
+                        )
+                    }
+                    timer.start()
                     addKeyListener(
                         object : KeyAdapter() {
                             override fun keyPressed(e: KeyEvent?) {
