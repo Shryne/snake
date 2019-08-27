@@ -16,15 +16,15 @@ class Snake(startX: Int, startY: Int, private val gridSize: GridSize)
     private val cells = mutableListOf(
         Cell(
             posList.first(),
-            Color.BLACK
+            Cell.HEAD_COLOR
         ),
         Cell(
             posList[1],
-            Color.DARK_GRAY
+            Cell.BODY_COLOR
         ),
         Cell(
             posList[2],
-            Color.DARK_GRAY
+            Cell.BODY_COLOR
         )
     )
 
@@ -39,7 +39,10 @@ class Snake(startX: Int, startY: Int, private val gridSize: GridSize)
     override fun tic() {
         if (posList.first().x + direction.x == posList[1].x &&
             posList.first().y + direction.y == posList[1].y) {
+            cells.first().color = Cell.BODY_COLOR
             posList.reverse()
+            cells.reverse()
+            cells.first().color = Cell.HEAD_COLOR
         }
         for (i in (1 until posList.size).reversed()) {
             posList[i].x = posList[i - 1].x
