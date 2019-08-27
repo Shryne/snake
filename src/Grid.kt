@@ -2,7 +2,7 @@ import java.awt.Graphics2D
 
 class Grid(
     private val area: Area,
-    private val gridSize: GridSize,
+    private val gridSize: GridSize = GridSize(20, 20),
     private val isVisible: Boolean = true
 ): Element {
 
