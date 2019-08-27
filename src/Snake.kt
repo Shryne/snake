@@ -1,8 +1,12 @@
 import java.awt.Color
 import java.awt.Graphics2D
 
-class Snake(startX: Int, startY: Int, private val gridSize: GridSize)
-    : GridElement {
+class Snake(
+    startX: Int,
+    startY: Int,
+    private val gridSize: GridSize,
+    private val onGrowth: () -> Unit = {}
+) : GridElement {
 
     companion object {
         const val START_LENGTH = 3
@@ -65,6 +69,7 @@ class Snake(startX: Int, startY: Int, private val gridSize: GridSize)
                 Color.DARK_GRAY
             )
         )
+        onGrowth()
     }
 
     fun without(posList: List<List<GridPos>>) : List<List<GridPos>> {

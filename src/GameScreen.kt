@@ -3,20 +3,22 @@ import java.awt.Graphics2D
 class GameScreen(private val labels: Element, private val grid: Grid)
     : Element {
 
-    private constructor(size: Size, labels: Labels):
+    private constructor(size: Size, scores: Scores):
         this(
-            labels,
+            scores,
             Grid(
                 Area(
                     { 0 },
-                    { labels.height },
+                    { scores.height },
                     { size.w },
-                    { size.h - labels.height }
+                    { size.h - scores.height }
                 )
-            )
+            ) {
+                scores.score += 10
+            }
         )
 
-    constructor(size: Size): this(size, Labels(size))
+    constructor(size: Size): this(size, Scores(size))
 
     val snakeLength get() = grid.snakeLength
 

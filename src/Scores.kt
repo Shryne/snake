@@ -1,7 +1,8 @@
 import java.awt.Font
 import java.awt.Graphics2D
+import kotlin.math.max
 
-class Labels(
+class Scores(
     private val windowSize: Size,
     val pos: Pos = Pos(),
     private val size: Int = 20
@@ -13,8 +14,16 @@ class Labels(
     val height: Int
         get() = ascent + descent + 1
 
+    private var highScore = 0
+    private var text = "HighScore: 0, Score: 0"
+    var score = 0
+        set(value) {
+            field = value
+            highScore = max(highScore, value)
+            text = "HighScore: $highScore, Score: $value"
+        }
+
     override fun draw(g: Graphics2D) {
-        val text = "HighScore: 0, Score: 0"
         if (!fontInitialized) {
             g.font = Font("Calibri", Font.PLAIN, size)
             ascent = g.fontMetrics.getLineMetrics(text, g).ascent.toInt()

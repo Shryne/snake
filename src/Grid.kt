@@ -3,7 +3,8 @@ import java.awt.Graphics2D
 class Grid(
     private val area: Area,
     private val gridSize: GridSize = GridSize(20, 20),
-    private val isVisible: Boolean = true
+    private val isVisible: Boolean = true,
+    onGrowth: () -> Unit = {}
 ): Element {
 
     private val cellSize = Size(
@@ -13,7 +14,8 @@ class Grid(
     private val snake = Snake(
         10,
         10,
-        gridSize
+        gridSize,
+        onGrowth
     )
 
     private val allPositions = List(gridSize.rows) {
