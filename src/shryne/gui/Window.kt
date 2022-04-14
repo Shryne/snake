@@ -13,22 +13,23 @@ import javax.swing.JFrame
 import javax.swing.Timer
 import kotlin.math.max
 
+/**
+ * The window containing the game. The window will be positioned at the center.
+ *
+ * @param winSize The size of the window.
+ */
 class Window(private val winSize: Size) {
+    /**
+     * @param w The width of the window.
+     * @param h The height of the window.
+     */
     constructor(w: Int, h: Int) : this(Size(w, h))
 
-    companion object {
-        private const val MIN_DELAY = 80
-        private const val MAX_DELAY = 400
-    }
-
-    private val frame = lazy {
-        JFrame("shryne.gui.element.Snake").apply {
+    private val frame by lazy {
+        JFrame("Snake").apply {
             defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-
             contentPane = object : JComponent() {
-                val content = GameScreen(
-                    Size({ width }, { height })
-                )
+                val content = GameScreen(width, height)
 
                 init {
                     val timer = Timer(0) {
@@ -47,8 +48,8 @@ class Window(private val winSize: Size) {
                     timer.start()
                     addKeyListener(
                         object : KeyAdapter() {
-                            override fun keyPressed(e: KeyEvent?) {
-                                when (e?.keyCode) {
+                            override fun keyPressed(e: KeyEvent) {
+                                when (e.keyCode) {
                                     KeyEvent.VK_UP, KeyEvent.VK_W
                                     -> content.event(Event.UP)
                                     KeyEvent.VK_DOWN, KeyEvent.VK_S
@@ -90,6 +91,11 @@ class Window(private val winSize: Size) {
     }
 
     fun show() {
-        frame.value.isVisible = true
+        frame.isVisible = true
+    }
+
+    companion object {
+        private const val MIN_DELAY = 80
+        private const val MAX_DELAY = 400
     }
 }

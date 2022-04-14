@@ -1,7 +1,6 @@
 package shryne.gui.element
 
 import shryne.Event
-import GridPos
 import java.awt.Color
 
 class Cell(private val pos: GridPos, var color: Color) : GridElement {

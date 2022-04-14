@@ -1,7 +1,6 @@
 package shryne.gui.element
 
 import shryne.Event
-import GridPos
 import java.awt.Color
 
 typealias Target = (GridPos, Color) -> Unit

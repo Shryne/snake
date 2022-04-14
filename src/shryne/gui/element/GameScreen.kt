@@ -1,16 +1,26 @@
 package shryne.gui.element
 
 import shryne.Event
-import Grid
 import shryne.area.Area
 import shryne.area.Size
 import shryne.area.minus
 import java.awt.Graphics2D
 
-class GameScreen(private val labels: Element, private val grid: Grid)
-    : Element {
+/**
+ * The content of the game.
+ *
+ * @param labels The labels (for example to show the score) to be shown.
+ * @param grid The grid where the actual game happens.
+ */
+class GameScreen(
+    private val labels: Element,
+    private val grid: Grid
+) : Element {
 
-    private constructor(size: Size, scores: Scores):
+    /**
+     * @param scores The scores to be shown.
+     */
+    private constructor(size: Size, scores: Scores) :
         this(
             scores,
             Grid(
@@ -25,8 +35,16 @@ class GameScreen(private val labels: Element, private val grid: Grid)
             }
         )
 
-    constructor(size: Size): this(size, Scores(size))
+    constructor(size: Size) : this(size, Scores(size))
 
+    /**
+     * @param w The widht of the
+     */
+    constructor(w: Number, h: Number) : this(Size(w, h))
+
+    /**
+     * The current length of the snake (including the head).
+     */
     val snakeLength get() = grid.snakeLength
 
     override fun draw(g: Graphics2D) {

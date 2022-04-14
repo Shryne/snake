@@ -7,17 +7,20 @@ import java.awt.Font
 import java.awt.Graphics2D
 import kotlin.math.max
 
+/**
+ * Represents the score and the high score.
+ */
 class Scores(
     private val windowSize: Size,
-    val pos: Pos = Pos(),
+    private val pos: Pos = Pos(),
     private val size: Int = 20
 ) : Element {
 
     private var fontInitialized = false
     private var ascent: Int = 0
     private var descent: Int = 0
-    val height: Int
-        get() = ascent + descent + 1
+
+    val height: Int get() = ascent + descent + 1
 
     private var highScore = 0
     private var text = "HighScore: 0, Score: 0"
