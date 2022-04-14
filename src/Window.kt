@@ -1,3 +1,4 @@
+import area.Size
 import java.awt.Dimension
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -8,7 +9,7 @@ import javax.swing.Timer
 import kotlin.math.max
 
 class Window(private val winSize: Size) {
-    constructor(w: Int, h: Int): this(Size(w, h))
+    constructor(w: Int, h: Int) : this(Size(w, h))
 
     companion object {
         private const val MIN_DELAY = 80
@@ -25,16 +26,18 @@ class Window(private val winSize: Size) {
                 )
 
                 init {
-                    val timer = Timer(0, ActionListener { content.tic() }).apply {
+                    val timer = Timer(0) {
+                        content.tic()
+                    }.apply {
                         isRepeats = true
-                    }
-                    timer.addActionListener {
-                        timer.delay = max(
-                            MIN_DELAY,
-                            MAX_DELAY - (
-                                content.snakeLength - Snake.START_LENGTH
-                                ) * 10
-                        )
+                        addActionListener {
+                            delay = max(
+                                MIN_DELAY,
+                                MAX_DELAY - (
+                                    content.snakeLength - Snake.START_LENGTH
+                                    ) * 10
+                            )
+                        }
                     }
                     timer.start()
                     addKeyListener(
@@ -71,7 +74,10 @@ class Window(private val winSize: Size) {
             contentPane.isFocusable = true
             contentPane.requestFocusInWindow()
 
-            Timer(0, ActionListener { repaint() }).apply {
+            // because swing doesn't update the screen by itself:
+            Timer(0) {
+                repaint()
+            }.apply {
                 isRepeats = true
                 delay = 17
             }.start()
@@ -81,5 +87,4 @@ class Window(private val winSize: Size) {
     fun show() {
         frame.value.isVisible = true
     }
-
 }

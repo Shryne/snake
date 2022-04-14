@@ -1,3 +1,7 @@
+import area.Area
+import area.Size
+import area.div
+import area.plus
 import java.awt.Graphics2D
 
 class Grid(

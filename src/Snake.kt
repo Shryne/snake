@@ -31,7 +31,7 @@ class Snake(
 
     val length get() = cells.size
 
-    override fun drawOn(target: Target) = cells.forEach{ it.drawOn(target) }
+    override fun drawOn(target: Target) = cells.forEach { it.drawOn(target) }
     override fun event(event: Event) {
         if (!ticked) {
             direction.apply(event)
@@ -41,7 +41,8 @@ class Snake(
 
     override fun tic() {
         if (posList.first().x + direction.x == posList[1].x &&
-            posList.first().y + direction.y == posList[1].y) {
+            posList.first().y + direction.y == posList[1].y
+        ) {
             cells.first().color = Cell.BODY_COLOR
             posList.reverse()
             cells.reverse()
@@ -72,7 +73,7 @@ class Snake(
         onGrowth()
     }
 
-    fun without(posList: List<List<GridPos>>) : List<List<GridPos>> {
+    fun without(posList: List<List<GridPos>>): List<List<GridPos>> {
         val result = posList.map {
             it.toMutableList()
         }.toMutableList()

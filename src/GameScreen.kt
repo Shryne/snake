@@ -1,3 +1,6 @@
+import area.Area
+import area.Size
+import area.minus
 import java.awt.Graphics2D
 
 class GameScreen(private val labels: Element, private val grid: Grid)

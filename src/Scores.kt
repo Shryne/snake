@@ -1,3 +1,5 @@
+import area.Pos
+import area.Size
 import java.awt.Font
 import java.awt.Graphics2D
 import kotlin.math.max
