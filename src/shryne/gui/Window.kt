@@ -1,4 +1,9 @@
-import area.Size
+package shryne.gui
+
+import shryne.Event
+import shryne.gui.element.GameScreen
+import shryne.area.Size
+import shryne.gui.element.Snake
 import java.awt.Dimension
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -17,7 +22,7 @@ class Window(private val winSize: Size) {
     }
 
     private val frame = lazy {
-        JFrame("Snake").apply {
+        JFrame("shryne.gui.element.Snake").apply {
             defaultCloseOperation = JFrame.EXIT_ON_CLOSE
 
             contentPane = object : JComponent() {

@@ -1,5 +1,8 @@
-import area.Pos
-import area.Size
+package shryne.gui.element
+
+import shryne.Event
+import shryne.area.Pos
+import shryne.area.Size
 import java.awt.Font
 import java.awt.Graphics2D
 import kotlin.math.max

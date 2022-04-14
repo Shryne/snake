@@ -1,4 +1,4 @@
-package area
+package shryne.area
 
 import java.lang.UnsupportedOperationException
 

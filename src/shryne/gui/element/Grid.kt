@@ -1,7 +1,10 @@
-import area.Area
-import area.Size
-import area.div
-import area.plus
+import shryne.area.Area
+import shryne.area.Size
+import shryne.area.div
+import shryne.area.plus
+import shryne.gui.element.Snake
+import shryne.gui.element.Element
+import shryne.Event
 import java.awt.Graphics2D
 
 class Grid(

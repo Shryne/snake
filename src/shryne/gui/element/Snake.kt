@@ -1,5 +1,11 @@
+package shryne.gui.element
+
+import shryne.Direction
+import shryne.Event
+import GridPos
+import GridSize
+import MutGridPos
 import java.awt.Color
-import java.awt.Graphics2D
 
 class Snake(
     startX: Int,

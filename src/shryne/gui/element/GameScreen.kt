@@ -1,6 +1,10 @@
-import area.Area
-import area.Size
-import area.minus
+package shryne.gui.element
+
+import shryne.Event
+import Grid
+import shryne.area.Area
+import shryne.area.Size
+import shryne.area.minus
 import java.awt.Graphics2D
 
 class GameScreen(private val labels: Element, private val grid: Grid)

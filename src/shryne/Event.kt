@@ -1,3 +1,5 @@
+package shryne
+
 enum class Event {
     UP,
     DOWN,

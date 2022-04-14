@@ -1,4 +1,4 @@
-package area
+package shryne.area
 
 class Scalar(private val value: () -> Number) : Number() {
     override fun toByte() = value().toByte()

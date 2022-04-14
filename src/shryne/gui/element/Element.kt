@@ -1,5 +1,7 @@
+package shryne.gui.element
+
+import shryne.Event
 import java.awt.Graphics2D
-import java.awt.event.KeyEvent
 
 interface Element {
     fun draw(g: Graphics2D)

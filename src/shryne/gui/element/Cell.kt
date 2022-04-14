@@ -1,6 +1,8 @@
+package shryne.gui.element
+
+import shryne.Event
+import GridPos
 import java.awt.Color
-import java.awt.Graphics
-import java.awt.Graphics2D
 
 class Cell(private val pos: GridPos, var color: Color) : GridElement {
     companion object {
