@@ -14,7 +14,6 @@ class Grid(
     private val isVisible: Boolean = true,
     onGrowth: () -> Unit = {}
 ): Element {
-
     private val cellSize = Size(
         { area.w / gridSize.cols }, { area.h / gridSize.rows }
     )
@@ -39,6 +38,7 @@ class Grid(
     val snakeLength get() = snake.length
 
     override fun draw(g: Graphics2D) {
+        println("${area.x}, ${area.y}, ${area.w}")
         if (isVisible) {
             for (row in 0 until gridSize.rows) {
                 g.drawLine(

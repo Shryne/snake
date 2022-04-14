@@ -26,4 +26,6 @@ data class Area(val pos: Pos = Pos(), val size: Size = Size()) {
     fun applyOn(target: (Int, Int, Int, Int) -> Unit) = target(
         pos.x.toInt(), pos.y.toInt(), size.w.toInt(), size.h.toInt()
     )
+
+    override fun toString() = "[$pos, $size]"
 }

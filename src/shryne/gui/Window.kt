@@ -28,9 +28,9 @@ class Window(private val winSize: Size) {
     private val frame by lazy {
         JFrame("Snake").apply {
             defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+
             contentPane = object : JComponent() {
                 val content = GameScreen(width, height)
-
                 init {
                     val timer = Timer(0) {
                         content.tic()

@@ -8,4 +8,6 @@ class Scalar(private val value: () -> Number) : Number() {
     override fun toInt() = value().toInt()
     override fun toLong() = value().toLong()
     override fun toShort() = value().toShort()
+
+    override fun toString(): String = value.invoke().toString()
 }
