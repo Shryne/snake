@@ -30,7 +30,7 @@ class Window(private val winSize: Size) {
             defaultCloseOperation = JFrame.EXIT_ON_CLOSE
 
             contentPane = object : JComponent() {
-                val content = GameScreen(width, height)
+                val content = GameScreen(Size({ width }, { height }))
                 init {
                     val timer = Timer(0) {
                         content.tic()
