@@ -13,7 +13,7 @@ import kotlin.math.max
 class Scores(
     private val windowSize: Size,
     private val pos: Pos = Pos(),
-    private val size: Int = 20
+    private val size: Int = 36
 ) : Element {
 
     private var fontInitialized = false
@@ -33,7 +33,7 @@ class Scores(
 
     override fun draw(g: Graphics2D) {
         if (!fontInitialized) {
-            g.font = Font("Calibri", Font.PLAIN, size)
+            g.font = Font("Chalkduster", Font.PLAIN, size)
             ascent = g.fontMetrics.getLineMetrics(text, g).ascent.toInt()
             descent = g.fontMetrics.getLineMetrics(text, g).descent.toInt()
         }
