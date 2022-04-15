@@ -11,13 +11,9 @@ class Snake(
     private val onGrowth: () -> Unit = {}
 ) : GridElement {
 
-    companion object {
-        const val START_LENGTH = 3
-    }
-
     private val direction = Direction()
-    private var ticked = false
 
+    private var ticked = false
     private val posList = MutableList(START_LENGTH) {
         MutGridPos(startX, startY)
     }
@@ -35,13 +31,13 @@ class Snake(
     val length get() = cells.size
 
     override fun drawOn(target: Target) = cells.forEach { it.drawOn(target) }
+
     override fun event(event: Event) {
         if (!ticked) {
             direction.apply(event)
             ticked = true
         }
     }
-
     override fun tic() {
         if (posList.first().x + direction.x == posList[1].x &&
             posList.first().y + direction.y == posList[1].y
@@ -87,6 +83,10 @@ class Snake(
             result.removeIf { it.isEmpty() }
         }
         return result
+    }
+
+    companion object {
+        const val START_LENGTH = 3
     }
 }
 

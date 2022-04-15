@@ -12,8 +12,7 @@ class Image(path: String = "images/snake-head.png") : Element {
     private val picture by lazy { ImageIO.read(File(path)) }
 
     override fun draw(g: Graphics2D) {
-        g.drawImage(picture, 0, 0, 100, 100
-        ) { img, infoflags, x, y, width, height -> TODO("Not yet implemented") }
+        g.drawImage(picture, 0, 0, 100, 100, nullObserver)
     }
 
     override fun event(e: Event) {
@@ -24,4 +23,7 @@ class Image(path: String = "images/snake-head.png") : Element {
 
     }
 
+    private companion object {
+        private val nullObserver = ImageObserver { _, _, _, _, _, _ -> true }
+    }
 }
