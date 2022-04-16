@@ -1,10 +1,8 @@
-import shryne.gui.element.GridElement
-import java.awt.Color
-import shryne.gui.element.Target
+package shryne.gui.element
+
 import shryne.Event
+import shryne.area.Area
 import shryne.gui.Image
-import shryne.gui.element.Element
-import shryne.gui.element.GridPos
 import java.awt.Graphics2D
 
 /**
@@ -12,7 +10,7 @@ import java.awt.Graphics2D
  * it raises the score.
  */
 class Apple(val pos: GridPos) : Element {
-    private val image = Image("images/apple.png")
+    private val image = Image("images/apple.png", Area())
 
     override fun draw(g: Graphics2D) {
         image.draw(g)
