@@ -8,6 +8,8 @@ import java.awt.Dimension
 import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.event.*
+import java.io.File
+import javax.swing.ImageIcon
 import javax.swing.JComponent
 import javax.swing.JFrame
 import javax.swing.Timer
@@ -28,6 +30,7 @@ class Window(private val winSize: Size) {
     private val frame by lazy {
         JFrame("Snake").apply {
             defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+            this.iconImage = ImageIcon("images/snake-icon.png").image;
 
             contentPane = object : JComponent() {
                 val content = GameScreen(Size({ width }, { height }))
