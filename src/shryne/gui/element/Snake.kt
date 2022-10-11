@@ -34,7 +34,7 @@ class Snake(
 
     override fun event(event: Event) {
         if (!ticked) {
-            direction.apply(event)
+            event.applyOn(direction)
             ticked = true
         }
     }
