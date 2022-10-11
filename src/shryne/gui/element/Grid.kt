@@ -1,12 +1,11 @@
 package shryne.gui.element
 
-import Apple
-import shryne.area.Area
-import shryne.area.Size
-import shryne.area.div
-import shryne.area.plus
 import shryne.Event
+import shryne.area.*
+import shryne.gui.Image
 import java.awt.Graphics2D
+import kotlin.math.floor
+import kotlin.math.roundToInt
 
 class Grid(
     private val area: Area,
@@ -14,16 +13,8 @@ class Grid(
     private val isVisible: Boolean = true,
     onGrowth: () -> Unit = {}
 ): Element {
-    private val cellSize = Size(
-        { area.w / gridSize.cols }, { area.h / gridSize.rows }
-    )
-
-    private val snake = Snake(
-        10,
-        10,
-        gridSize,
-        onGrowth
-    )
+    private val cellSize = Size(area.w / gridSize.cols, area.h / gridSize.rows)
+    private val snake = Snake(10, 10, gridSize, onGrowth)
 
     private val allPositions = List(gridSize.rows) {
         x -> List(gridSize.cols) {
@@ -35,12 +26,27 @@ class Grid(
         snake.without(allPositions).random().random()
     )
 
+    private var background = MutableList(gridSize.rows) { y ->
+        MutableList(gridSize.cols) { x ->
+            Image(
+                "images/background1.png",
+                Area(
+                    area.x + cellSize.w * x,
+                    Scalar { floor(area.y.toDouble() + y.toDouble() * cellSize.h.toDouble()) },
+                    Scalar { cellSize.w.toDouble() },
+                    Scalar { cellSize.h.toDouble() }
+                )
+            )
+        }
+    }
+
     val snakeLength get() = snake.length
 
     override fun draw(g: Graphics2D) {
-        println("${area.x}, ${area.y}, ${area.w}")
+        food.draw(g)
+        background.forEach { it.forEach { it.draw(g) } }
         if (isVisible) {
-            for (row in 0 until gridSize.rows) {
+            for (row in 0..gridSize.rows) {
                 g.drawLine(
                     area.x.toInt(),
                     (area.y + row * cellSize.h.toDouble()).toInt(),
@@ -56,17 +62,6 @@ class Grid(
                     area.y.toInt() + area.h.toInt()
                 )
             }
-        }
-        food.drawOn { gridPos, color ->
-            val prev = g.color
-            g.color = color
-            g.fillRect(
-                (area.x + gridPos.x * cellSize.w.toDouble()).toInt(),
-                (area.y + gridPos.y * cellSize.h.toDouble()).toInt(),
-                cellSize.w.toInt() + 1,
-                cellSize.h.toInt() + 1
-            )
-            g.color = prev
         }
         snake.drawOn { gridPos, color ->
             val prev = g.color

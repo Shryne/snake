@@ -28,7 +28,7 @@ class GameScreen(
                     { 0 },
                     { scores.height },
                     { size.w },
-                    { size.h - scores.height }
+                    { size.h - scores.height - 50 }
                 )
             ) {
                 scores.score += 10
@@ -36,10 +36,6 @@ class GameScreen(
         )
 
     constructor(size: Size) : this(size, Scores(size))
-
-    /**
-     * @param w The widht of the
-     */
     constructor(w: Number, h: Number) : this(Size(w, h))
 
     /**

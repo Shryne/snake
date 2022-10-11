@@ -30,7 +30,7 @@ class Window(private val winSize: Size) {
     private val frame by lazy {
         JFrame("Snake").apply {
             defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-            this.iconImage = ImageIcon("images/snake-icon.png").image;
+            iconImage = ImageIcon("images/snake-icon.png").image;
 
             contentPane = object : JComponent() {
                 val content = GameScreen(Size({ width }, { height }))
